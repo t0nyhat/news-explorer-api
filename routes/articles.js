@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { createArticle } = require('../controllers/articles');
 
-router.post('/articles', createArticle);
+router.post('/', createArticle);
 
 module.exports = router;
