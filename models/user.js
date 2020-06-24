@@ -1,4 +1,3 @@
-// user
 const mongoose = require('mongoose');
 const validate = require('mongoose-validator');
 const bcrypt = require('bcryptjs');
