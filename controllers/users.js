@@ -4,7 +4,7 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-err');
 
 const getUsersById = (req, res, next) => {
-  User.findById(req.params.userId)
+  User.findById(req.user._id)
     .orFail(new NotFoundError(`Пользователя с id : ${req.params.userId} не существует!`))
     .then((user) => {
       if (!user) {
