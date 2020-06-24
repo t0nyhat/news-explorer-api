@@ -46,8 +46,13 @@ const articleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     required: true,
-    select: true,
+    select: false,
   },
 });
 
+articleSchema.methods.omitPrivate = function omitPrivate() {
+  const obj = this.toObject();
+  delete obj.owner;
+  return obj;
+};
 module.exports = mongoose.model('article', articleSchema);
