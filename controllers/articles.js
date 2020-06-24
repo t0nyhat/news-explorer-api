@@ -23,7 +23,7 @@ const getAllArticles = (req, res, next) => {
 
 const deleteArticleById = (req, res, next) => {
   const { articleId } = req.params;
-  const owner = '5ef2cab5d1dacf6ac43e5764';
+  const owner = '5ef30481b10d1776e9fb2558';
   Article.findOne({ _id: articleId })
     .orFail(() => {
       throw new NotFoundError(`Карточки с id : ${articleId} не существует!`);
