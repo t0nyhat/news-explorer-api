@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const validate = require('mongoose-validator');
+const { INVALID_LINK } = require('../constants/constants');
 
 const urlValidator = [
   validate({
     validator: 'isURL',
-    message: 'Невалидный URL изображения',
+    message: INVALID_LINK,
   }),
 ];
 
