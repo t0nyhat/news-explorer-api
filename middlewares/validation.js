@@ -1,6 +1,8 @@
 const { Joi, celebrate } = require('celebrate');
 const validator = require('validator');
-const { EMPTY, INVALID_LINK, INVALID_EMAIL } = require('../constants/constants');
+const {
+  EMPTY, INVALID_LINK, INVALID_EMAIL, ID_VALIDATION_ERROR,
+} = require('../constants/constants');
 
 const urlValidate = (link) => {
   if (validator.isEmpty(link)) {
@@ -45,7 +47,7 @@ const createArticleValidation = celebrate({
 
 const deleteArticleValidation = celebrate({
   params: Joi.object().keys({
-    articleId: Joi.string().alphanum().length(24),
+    articleId: Joi.string().alphanum().length(24).label(ID_VALIDATION_ERROR),
   }),
 });
 
