@@ -2,13 +2,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-err');
+const { SOURCE_NOT_FOUND } = require('../constants/constants');
 
 const getUsersById = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(new NotFoundError(`Пользователя с id : ${req.params.userId} не существует!`))
+    .orFail(new NotFoundError(SOURCE_NOT_FOUND))
     .then((user) => {
       if (!user) {
-        throw new NotFoundError(`Пользователя с id : ${req.params.userId} не существует!`);
+        throw new NotFoundError(SOURCE_NOT_FOUND);
       }
       res.send({ user });
     })
