@@ -7,6 +7,8 @@ const USER_NOT_FOUND = 'Пользователь не найден';
 const WRONG_MAIL_OR_PASS = 'Неправильная почта или пароль';
 const NOT_UNIQUE_EMAIL = 'Пользователь с такой почтой уже существует';
 const SERVER_ERROR = 'На сервере произошла ошибка';
+const ID_VALIDATION_ERROR = 'ID должно быть длинной 24 символа';
+const VALIDATION_ERROR = 'Ошибка валидации';
 
 module.exports = {
   INVALID_LINK,
@@ -18,4 +20,6 @@ module.exports = {
   WRONG_MAIL_OR_PASS,
   SOURCE_NOT_FOUND,
   EMPTY,
+  ID_VALIDATION_ERROR,
+  VALIDATION_ERROR,
 };
