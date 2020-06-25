@@ -1,12 +1,13 @@
 const Article = require('../models/article');
 const NotFoundError = require('../errors/not-found-err');
 const ForbidenError = require('../errors/forbiden-err');
+const { SOURCE_NOT_FOUND, PERMISSION_DENIED } = require('../constants/constants');
 
 const createArticle = (req, res, next) => {
   const {
     keyword, title, text, date, source, link, image,
   } = req.body;
-  const owner = '5ef30481b10d1776e9fb2558';
+  const owner = req.user._id;
   Article.create({
     keyword, title, text, date, source, link, image, owner,
   })
@@ -15,7 +16,7 @@ const createArticle = (req, res, next) => {
 };
 
 const getAllArticles = (req, res, next) => {
-  const owner = '5ef30481b10d1776e9fb2558';
+  const owner = req.user._id;
   Article.find({ owner })
     .then((articles) => res.send({ articles }))
     .catch(next);
@@ -23,14 +24,15 @@ const getAllArticles = (req, res, next) => {
 
 const deleteArticleById = (req, res, next) => {
   const { articleId } = req.params;
-  const owner = '5ef30481b10d1776e9fb2558';
+  const owner = req.user._id;
   Article.findOne({ _id: articleId })
     .orFail(() => {
-      throw new NotFoundError(`Карточки с id : ${articleId} не существует!`);
+      throw new NotFoundError(SOURCE_NOT_FOUND);
     })
-    .then((cardDocument) => {
-      if (!cardDocument.owner.equals(owner)) {
-        throw new ForbidenError('У вас нет прав для удаления карточки');
+    .select('+owner')
+    .then((articleDocument) => {
+      if (!articleDocument.owner.equals(owner)) {
+        throw new ForbidenError(PERMISSION_DENIED);
       }
       Article.findByIdAndRemove(articleId)
         .then((article) => res.send({ article }))
