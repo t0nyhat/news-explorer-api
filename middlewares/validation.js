@@ -1,43 +1,51 @@
 const { Joi, celebrate } = require('celebrate');
 const validator = require('validator');
+const { EMPTY, INVALID_LINK, INVALID_EMAIL } = require('../constants/constants');
 
 const urlValidate = (link) => {
+  if (validator.isEmpty(link)) {
+    throw new Error(EMPTY);
+  }
   if (!validator.isURL(link)) {
-    throw new Error('invalid avatar link');
+    throw new Error(INVALID_LINK);
   }
   return link;
 };
 
 const signupValidation = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
+    name: Joi.string().required().trim().min(2)
+      .max(30)
+      .label(EMPTY),
+    email: Joi.string().required().email().label(INVALID_EMAIL),
+    password: Joi.string().required().trim().min(8)
+      .label(EMPTY),
   }),
 });
 
 const signinValidation = celebrate({
   body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(6),
+    email: Joi.string().required().email().label(INVALID_EMAIL),
+    password: Joi.string().trim().required().min(8)
+      .label(EMPTY),
   }),
 });
 
 const createArticleValidation = celebrate({
   body: Joi.object().keys({
-    keyword: Joi.string().min(1).required(),
-    title: Joi.string().min(1).required(),
-    text: Joi.string().min(1).required(),
-    date: Joi.string().min(1).required(),
-    source: Joi.string().min(1).required(),
-    link: Joi.string().uri().required().custom(urlValidate),
-    image: Joi.string().uri().required().custom(urlValidate),
+    keyword: Joi.string().required().trim().label(EMPTY),
+    title: Joi.string().required().trim().label(EMPTY),
+    text: Joi.string().required().trim().label(EMPTY),
+    date: Joi.string().required().trim().label(EMPTY),
+    source: Joi.string().required().trim().label(EMPTY),
+    link: Joi.custom(urlValidate),
+    image: Joi.custom(urlValidate),
   }),
 });
 
 const deleteArticleValidation = celebrate({
   params: Joi.object().keys({
-    id: Joi.string().alphanum().length(24),
+    articleId: Joi.string().alphanum().length(24),
   }),
 });
 
