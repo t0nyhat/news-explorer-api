@@ -1,16 +1,16 @@
 const router = require('express').Router();
 const users = require('./users');
 const articles = require('./articles');
-const { createUser, login } = require('../controllers/users');
+const sign = require('./sign');
 const auth = require('../middlewares/auth');
-const { signupValidation, signinValidation } = require('../middlewares/validation');
+const all = require('./all');
 
-router.post('/signin', signinValidation, login);
-router.post('/signup', signupValidation, createUser);
+router.use('/', sign);
 
 router.use(auth);
 
 router.use('/articles', articles);
 router.use('/users', users);
+router.use(all);
 
 module.exports = router;
