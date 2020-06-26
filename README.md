@@ -57,7 +57,7 @@ DELETE /articles/id - удаляет статью по id
 
 Сохраните проект у себя на компьютере:
 ```
-git clone https://github.com/t0nyhat/back_12.git
+git clone https://github.com/t0nyhat/news-explorer-api.git
 ```
 
 В корне проекта через консоль/терминал запустите команду:
