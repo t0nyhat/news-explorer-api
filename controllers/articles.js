@@ -1,6 +1,5 @@
 const Article = require('../models/article');
-const NotFoundError = require('../errors/not-found-err');
-const ForbidenError = require('../errors/forbiden-err');
+const { NotFoundError, ForbidenError } = require('../errors/index');
 const { SOURCE_NOT_FOUND, PERMISSION_DENIED } = require('../constants/constants');
 
 const createArticle = (req, res, next) => {
@@ -11,7 +10,7 @@ const createArticle = (req, res, next) => {
   Article.create({
     keyword, title, text, date, source, link, image, owner,
   })
-    .then((article) => res.send({ article: article.omitPrivate() }))
+    .then((article) => res.status(201).send({ article: article.omitPrivate() }))
     .catch(next);
 };
 
