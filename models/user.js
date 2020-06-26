@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validate = require('mongoose-validator');
 const bcrypt = require('bcryptjs');
 const uniqueValidator = require('mongoose-unique-validator');
-const UnauthorisedError = require('../errors/unauthorised-err');
+const { UnauthorisedError } = require('../errors/index');
 const { INVALID_EMAIL, USER_NOT_FOUND, WRONG_MAIL_OR_PASS } = require('../constants/constants');
 
 const emailValidator = [
