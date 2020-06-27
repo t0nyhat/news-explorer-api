@@ -33,8 +33,8 @@ const deleteArticleById = (req, res, next) => {
       if (!articleDocument.owner.equals(owner)) {
         throw new ForbidenError(PERMISSION_DENIED);
       }
-      Article.findByIdAndRemove(articleId)
-        .then((article) => res.send({ article }))
+      Article.deleteOne(articleDocument)
+        .then(() => res.send({ message: 'ОК' }))
         .catch(next);
     })
     .catch(next);

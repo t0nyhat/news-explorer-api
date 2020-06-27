@@ -9,6 +9,7 @@ const router = require('./routes/index');
 const { errorHandler } = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { PORT, DATABASE_URL } = require('./config/config');
+const { errorTypeChecker } = require('./middlewares/errorTypeChecker');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(router);
 app.use(errorLogger);
 
 app.use(errors());
+app.use(errorTypeChecker);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
